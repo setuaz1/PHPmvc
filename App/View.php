@@ -14,6 +14,6 @@ class View
 
     public function render()
     {
-        include $this->view;
+        include VIEW_PATH . '/' . $this->view . '.php';
     }
 }
