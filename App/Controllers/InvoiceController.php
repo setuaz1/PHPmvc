@@ -2,22 +2,18 @@
 
 namespace App\Controllers;
 
+use App\View;
+
 class InvoiceController
 {
-    public function index():string
+    public function index(): View
     {
-//        setcookie(
-//            'userName',
-//            'Gio',
-//            time() - (24 * 60 * 60),
-//        );
-
-        return '';
+        return View::make('invoices/index');
     }
 
-    public function create():string
+    public function create(): View
     {
-        return '';
+        return View::make('invoices/create');
     }
 
     public function store()
