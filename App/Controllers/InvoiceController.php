@@ -18,7 +18,11 @@ class InvoiceController
 
     public function store()
     {
+        $invoice = new Invoice();
+
         $amount = $_POST['amount'];
+
+        $invoice->store($amount);
 
         var_dump($amount);
     }
