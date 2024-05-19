@@ -14,16 +14,17 @@ class HomeController
     public function index(): View
     {
         try {
-            $db = new PDO('mysql:host=programwithgio-db;dbname=my_db', 'root', 'root', [
-                PDO::ATTR_EMULATE_PREPARES => false,
-            ]);
+            $db = new PDO('mysql:host=' . $_ENV['DB_HOST'] . ';dbname=' . $_ENV['DB_DATABASE'],
+                $_ENV['DB_USER'],
+                $_ENV['DB_PASS']
+            );
         } catch (\PDOException $e) {
             var_dump($e->getCode());
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
 
-        $email = 'jonat@doe.com';
-        $name = 'Jonat Doe';
+        $email = 'jq@doe.com';
+        $name = 'Jq Doe';
         $amount = 25;
 
         try {
