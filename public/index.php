@@ -33,5 +33,7 @@ try {
     echo View::make('error/404');
 }
 
+echo;
+
 //phpinfo();
 
