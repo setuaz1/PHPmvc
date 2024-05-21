@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\App;
+
 //use App\Invoice;
 use App\Models\Invoice;
+use App\Models\SignUp;
 use App\Models\User;
 use App\View;
 use PDO;
@@ -18,47 +20,27 @@ class HomeController
     public function index(): View
     {
 
-        $db = App::db();
-
-        $email = 'jsadnn@doe.com';
+        $email = 'giogw@doe.com';
         $name = 'Jnadasn Doe';
         $amount = 25;
 
-        try {
-            $db->beginTransaction();
+        $userModel = new User();
+        $invoiceModel = new Invoice();
 
-            $userModel = new User();
-            $invoiceModel = new Invoice();
+        $invoiceId = (new SignUp($userModel, $invoiceModel))->register(
+            [
+                'email' => $email,
+                'name' => $name,
+            ],
+            [
+                'amount' => $amount,
+            ]
 
-            $userId = $userModel->create($email, $name);
-            $invoiceId = $invoiceModel->create($amount, $userId);
-            
-
-            $db->commit();
-        } catch(\Throwable $e) {
-            if($db->inTransaction()) {
-                $db->rollback();
-            }
-
-            throw $e;
-        }
-        $fetchStmt = $db->prepare(
-            'SELECT invoices.id AS invoice_id, amount, user_id, full_name
-            FROM invoices
-            INNER JOIN users ON user_id = users.id
-            WHERE email = ?'
         );
 
 
-        $fetchStmt->execute([$email]);
 
-        //$user = $db->query('SELECT * FROM users WHERE id = ' . $id)->fetch();
-
-        echo '<pre>';
-        var_dump($fetchStmt->fetch(PDO::FETCH_ASSOC));
-        echo '</pre>';
-
-        return View::make('index', ['foo' => 'bar']);
+        return View::make('index', ['invoice' => $invoiceModel->find($invoiceId)]);
     }
 
 

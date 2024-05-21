@@ -20,4 +20,19 @@ class Invoice extends Model
 
         return (int)$this->db->lastInsertId();
     }
+
+    public function find(int $invoiceId)
+    {
+        $stmt = $this->db->prepare(
+            'SELECT invoices.id, amount, full_name
+            FROM invoices
+            LEFT JOIN users ON users.id = user_id
+            WHERE invoices.id = ?'
+        );
+        $stmt->execute([$invoiceId]);
+
+        $invoice = $stmt->fetch();
+
+        return $invoice ? $invoice : [];
+    }
 }
