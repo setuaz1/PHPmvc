@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\App;
+//use App\Invoice;
+use App\Models\Invoice;
+use App\Models\User;
 use App\View;
 use PDO;
 
@@ -24,22 +27,12 @@ class HomeController
         try {
             $db->beginTransaction();
 
-            $newUserStmt = $db->prepare(
-                'INSERT INTO users (email, full_name, is_active, created_at)
-            VALUES(?, ?, 1, NOW())'
-            );
+            $userModel = new User();
+            $invoiceModel = new Invoice();
 
-            $newInvoiceStmt = $db->prepare(
-                'INSERT INTO invoices (amount, user_id)
-            VALUES(?, ?)'
-            );
-
-
-            $newUserStmt->execute([$email, $name]);
-
-            $userId = (int)$db->lastInsertId();
-
-            $newInvoiceStmt->execute([$amount, $userId]);
+            $userId = $userModel->create($email, $name);
+            $invoiceId = $invoiceModel->create($amount, $userId);
+            
 
             $db->commit();
         } catch(\Throwable $e) {
