@@ -1,6 +1,7 @@
 <?php
 
 use App\App;
+use App\Config;
 use App\Router;
 use App\View;
 
@@ -27,13 +28,7 @@ $router = new Router();
 (new App(
     $router,
     ['uri' => $_SERVER['REQUEST_URI'], 'method' => $_SERVER['REQUEST_METHOD']],
-    [
-    'host' => $_ENV['DB_HOST'],
-    'database' => $_ENV['DB_DATABASE'],
-    'user' => $_ENV['DB_USER'],
-    'pass' => $_ENV['DB_PASS'],
-    'driver' =>$_ENV['DB_DRIVER'] ?? 'mysql'
-    ]
+    new Config($_ENV)
 ))->run();
 
 

@@ -17,8 +17,8 @@ class HomeController
 
         $db = App::db();
 
-        $email = 'jnn@doe.com';
-        $name = 'Jnn Doe';
+        $email = 'jsadnn@doe.com';
+        $name = 'Jnadasn Doe';
         $amount = 25;
 
         try {
