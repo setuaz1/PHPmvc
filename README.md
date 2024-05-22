@@ -1,1 +1,1 @@
-Project was created by Docker
+Project was created by Docker, Transactions, PHPDotEnv
